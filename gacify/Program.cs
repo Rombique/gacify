@@ -18,7 +18,7 @@ namespace gacify
             }
 
             if (!args[0].EndsWith(".sln"))
-                args[0] = Directory.GetFiles(args[0], "*.sln", SearchOption.AllDirectories).FirstOrDefault();
+                args[0] = Directory.GetFiles(args[0], "*.sln", SearchOption.AllDirectories).SingleOrDefault();
 
             var gacPath = args.Length == 2 
                 ? args[1] 

@@ -10,3 +10,7 @@
 1. Билдим решение 
 2. External Tools -> Copy all to GAC
 3. Смотрим вывод
+
+# Статус
+[![Build Status](https://travis-ci.com/Rombique/gacify.svg?branch=master)](https://travis-ci.com/Rombique/gacify)
+[Download](https://github.com/Rombique/gacify/raw/master/gacify.exe)
