@@ -14,4 +14,4 @@
 # Статус
 [![Build Status](https://travis-ci.com/Rombique/gacify.svg?branch=master)](https://travis-ci.com/Rombique/gacify)
 
-[Download](https://github.com/Rombique/gacify/raw/master/gacify/gacify.exe)
+[Download](https://github.com/Rombique/gacify/raw/master/gacify.zip)
