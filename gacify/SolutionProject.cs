@@ -71,8 +71,9 @@ namespace gacify
             return dllFiles.Select(filePath =>
                 {
                     var configName = filePath.Substring(firstPartFolder.Length)
-                        .TrimStart(Path.DirectorySeparatorChar)
-                        .Split(Path.DirectorySeparatorChar).FirstOrDefault();
+                        .TrimStart(Path.DirectorySeparatorChar);
+                    configName = configName.Substring(0, configName.Length - (projectName + ".dll").Length)
+                        .TrimEnd(Path.DirectorySeparatorChar);
                     return new KeyValuePair<string, string>(configName, filePath);
                 }
             ).ToDictionary(k => k.Key, k => k.Value);
