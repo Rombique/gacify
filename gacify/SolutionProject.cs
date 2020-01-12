@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace gacify
         public string RelativePath { get; private set; }
         public string ProjectGuid { get; private set; }
         public string ProjectType { get; private set; }
-        public string DllDebugPath { get; private set; }
+        public Dictionary<string, string> ConfigPathDict { get; private set; }
         public bool IsSigned { get; private set; }
         public string SolutionFolder { get; private set; }
         public bool IsLibrary { get; private set; }
@@ -44,8 +45,7 @@ namespace gacify
             ProjectGuid = s_ProjectInSolution_ProjectGuid.GetValue(solutionProject, null) as string;
             ProjectType = s_ProjectInSolution_ProjectType.GetValue(solutionProject, null).ToString();
             SolutionFolder = solutionFolder ?? throw new ArgumentNullException(nameof(solutionFolder));
-            var debugFolder = Path.Combine(SolutionFolder, ProjectName, "bin\\Debug");
-            DllDebugPath = Directory.GetFiles(debugFolder, ProjectName + ".dll", SearchOption.AllDirectories).FirstOrDefault();
+            ConfigPathDict = GetConfigurations(solutionFolder, ProjectName);
 
             XmlDocument xDoc = new XmlDocument();
             xDoc.Load(Path.Combine(SolutionFolder, RelativePath));
@@ -61,6 +61,21 @@ namespace gacify
                         IsLibrary = childnode.InnerText == "Library";
                 }
             }
+        }
+
+        private Dictionary<string,string> GetConfigurations(string solutionFolder, string projectName)
+        {
+            var firstPartFolder = Path.Combine(solutionFolder, projectName, "bin");
+            var dllFiles = Directory.GetFiles(firstPartFolder, projectName + ".dll", SearchOption.AllDirectories);
+
+            return dllFiles.Select(filePath =>
+                {
+                    var configName = filePath.Substring(firstPartFolder.Length)
+                        .TrimStart(Path.DirectorySeparatorChar)
+                        .Split(Path.DirectorySeparatorChar).FirstOrDefault();
+                    return new KeyValuePair<string, string>(configName, filePath);
+                }
+            ).ToDictionary(k => k.Key, k => k.Value);
         }
     }
 }
