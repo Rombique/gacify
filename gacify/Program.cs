@@ -30,8 +30,7 @@ namespace gacify
                         if (!isConfigExist)
                             throw new Exception($"Configuration {o.Configuration} not found in project {signedProject.ProjectName}");
                         RunProcess(gacPath, signedProject.ProjectName, configPair);
-                    }
-                        
+                    }   
                 });
         }
 
@@ -55,9 +54,9 @@ namespace gacify
             return null;
         }
 
-        static string RunProcess(string gacUtilPath, string projectName, string dllPath)
+        static void RunProcess(string gacUtilPath, string projectName, string dllPath)
         {
-            string output = string.Empty;
+            string output;
 
             using (Process gacUtil = new Process())
             {
@@ -73,12 +72,10 @@ namespace gacify
                 StreamReader reader = gacUtil.StandardOutput;
                 output = reader.ReadToEnd();
 
-                Console.WriteLine(output);
+                Console.WriteLine($"{output}\n/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/\n");
 
                 gacUtil.WaitForExit();
             }
-
-            return output;
         }
     }
 }
