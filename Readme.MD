@@ -2,8 +2,9 @@
 Добавить в External Tools в VS. 
 Указав любое удобное название, например ```Copy all to GAC```.
 Команда - путь до исполняемого файла, например ```C:\tools\gacify.exe```
-Аргументы - ```$(SolutionDir)``` или ```$(SolutionDir) "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\gacutil.exe"```,
-где второй аргумент - путь до gacutil.
+Аргументы - ```-s $(SolutionDir)``` или ```-s $(SolutionDir) -g "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\gacutil.exe" -c Release```,
+где второй аргумент - путь до gacutil,
+а третий аргумент - название конфигурации.
 Поставить чекбокс - ```Использовать окно вывода```
 
 # Как использовать
